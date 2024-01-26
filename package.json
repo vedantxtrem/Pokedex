@@ -1,5 +1,6 @@
 {
   "name": "pokedex",
+  "homepage": "https://vedantxtrem.github.io/Pokedex",
   "private": true,
   "version": "0.0.0",
   "type": "module",

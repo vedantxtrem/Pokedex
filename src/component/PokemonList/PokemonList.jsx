@@ -8,10 +8,20 @@ function PokemonList() {
     const [pokemonList, setpokemonList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
+    const [pokedex_url,setpokedex_url]= useState('https://pokeapi.co/api/v2/pokemon');
+    const [nexturl,setnexturl] = useState('');
+    const [prevurl,setprevurl] = useState('');
+
+
     async function downloadPokemons() {
 
-        const response = await axios.get('https://pokeapi.co/api/v2/pokemon');
+        setIsLoading(true);
+        const response = await axios.get(pokedex_url);
         const pokemonResult = response.data.results;
+
+        setnexturl(response.data.next);
+        setprevurl(response.data.previous);
+
         const pokemonResultPromise = pokemonResult.map((pokemon) => axios.get(pokemon.url));
         const pokemonData = await axios.all(pokemonResultPromise);
         console.log(pokemonData);
@@ -32,7 +42,7 @@ function PokemonList() {
     useEffect(() => {
         downloadPokemons();
       
-    },[]);
+    },[pokedex_url]);
 
  
     return (
@@ -46,10 +56,8 @@ function PokemonList() {
             </div>
 
             <div className="flex justify-between gap-4">
-                <button className="w-52 text-white p-2 bg-green-600 rounded-2xl font-bold font-mono " > ⏮️ Previous</button>
-                <button className="w-52 text-white p-2 bg-green-600 rounded-2xl font-bold font-mono " >Next ⏭️ </button>
-
-                
+                <button disabled={ prevurl == null } onClick={()=> setpokedex_url(prevurl)} className="w-52 text-white p-2 bg-green-600 rounded-2xl font-bold font-mono " > ⏮️ Previous</button>
+                <button disabled={ nexturl == null} onClick={()=> setpokedex_url(nexturl)} className="w-52 text-white p-2 bg-green-600 rounded-2xl font-bold font-mono " >Next ⏭️ </button>
             </div>
         </div>
     )

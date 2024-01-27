@@ -56,8 +56,8 @@ function PokemonList() {
             </div>
 
             <div className="flex justify-between gap-4">
-                <button disabled={ prevurl == null } onClick={()=> setpokedex_url(prevurl)} className="w-52 text-white p-2 bg-green-600 rounded-2xl font-bold font-mono " > ⏮️ Previous</button>
-                <button disabled={ nexturl == null} onClick={()=> setpokedex_url(nexturl)} className="w-52 text-white p-2 bg-green-600 rounded-2xl font-bold font-mono " >Next ⏭️ </button>
+                <button disabled={ prevurl == null } onClick={()=> setpokedex_url(prevurl)} className="w-32 mb-5  md:w-52 text-white p-2 bg-green-600 rounded-2xl font-bold font-mono " > ⏮️ Previous</button>
+                <button disabled={ nexturl == null} onClick={()=> setpokedex_url(nexturl)} className="w-32 mb-5  md:w-52 text-white p-2 bg-green-600 rounded-2xl font-bold font-mono " >Next ⏭️ </button>
             </div>
         </div>
     )

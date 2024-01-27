@@ -10,8 +10,8 @@ function CoustomRoutes() {
         <>
         
         <Routes>
-            <Route path="/pokemon/" element={<Pokedex />} />
-            <Route path="/Pokemon/:id" element={<PokemonDetails />} />
+            <Route path="/pokedex/" element={<Pokedex />} />
+            <Route path="/Pokedex/:id" element={<PokemonDetails />} />
         </Routes>
 
         </>

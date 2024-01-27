@@ -26,8 +26,8 @@ function PokemonDetails() {
         <>
             <div className="w-full h-screen flex justify-center items-center flex-col text-center bg-gray-900 text-white ">
                 <div className="border-2 border-green-400 w-fit p-10 flex  flex-col justify-between rounded-3xl m-2 hover:bg-gray-700">
-                    <div className="font-thin text-2xl font-mono ">Name : {pokemon.name}</div>
                     <img className="" src={pokemon.image} alt="" />
+                    <div className="font-thin text-2xl font-mono ">Name : {pokemon.name}</div>
                     <div className="font-thin text-2xl font-mono ">Weight : {pokemon.weight}</div>
                     <div className="font-thin text-2xl font-mono ">Height : {pokemon.height}</div>
                     <div className="font-thin text-2xl font-mono ">Types : {pokemon.types}</div>

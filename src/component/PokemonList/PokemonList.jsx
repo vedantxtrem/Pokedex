@@ -51,7 +51,7 @@ function PokemonList() {
 
             <div className="w-[80%] p-5 flex justify-center flex-wrap">
 
-                { (isLoading) ? 'loading......' : pokemonList.map((p) => <Pokemon name={p.name} image={p.image}  />) }
+                { (isLoading) ? 'loading......' : pokemonList.map((p) => <Pokemon name={p.name} image={p.image} id={p.id} />) }
 
             </div>
 

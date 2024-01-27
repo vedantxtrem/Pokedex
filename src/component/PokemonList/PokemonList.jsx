@@ -18,13 +18,17 @@ function PokemonList() {
         setIsLoading(true);
         const response = await axios.get(pokedex_url);
         const pokemonResult = response.data.results;
+        console.log(response);
 
         setnexturl(response.data.next);
         setprevurl(response.data.previous);
 
         const pokemonResultPromise = pokemonResult.map((pokemon) => axios.get(pokemon.url));
+
         const pokemonData = await axios.all(pokemonResultPromise);
+
         console.log(pokemonData);
+        
         const PokeListres = pokemonData.map((pokedata) => {
             const pokemon = pokedata.data;
             return {

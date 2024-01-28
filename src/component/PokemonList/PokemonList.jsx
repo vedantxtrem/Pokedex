@@ -5,23 +5,28 @@ import Pokemon from "../Pokemon/Pokemon.jsx";
 
 function PokemonList() {
 
-    const [pokemonList, setpokemonList] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [pokemonListState,setpokemonListState]=useState({
+        pokemonList:[],
+        isLoading: true,
+        pokedex_url:'https://pokeapi.co/api/v2/pokemon',
+        nexturl:'',
+        prevurl:'',
 
-    const [pokedex_url,setpokedex_url]= useState('https://pokeapi.co/api/v2/pokemon');
-    const [nexturl,setnexturl] = useState('');
-    const [prevurl,setprevurl] = useState('');
-
-
+    })
+    
     async function downloadPokemons() {
 
-        setIsLoading(true);
-        const response = await axios.get(pokedex_url);
-        const pokemonResult = response.data.results;
-        console.log(response);
+        setpokemonListState((state)=>({...state ,isLoading:true}));
 
-        setnexturl(response.data.next);
-        setprevurl(response.data.previous);
+        const response = await axios.get(pokemonListState.pokedex_url);
+        const pokemonResult = response.data.results;
+        console.log(pokemonResult);
+
+        setpokemonListState((state)=> ({
+            ...state,
+            nexturl:response.data.next,
+            prevurl:response.data.previous
+        }));
 
         const pokemonResultPromise = pokemonResult.map((pokemon) => axios.get(pokemon.url));
 
@@ -39,14 +44,13 @@ function PokemonList() {
             }
         })
         console.log(PokeListres);
-        setpokemonList(PokeListres);
-        setIsLoading(false);
+        setpokemonListState((state)=> ({...state, pokemonList:PokeListres , isLoading:false}));
     }
 
     useEffect(() => {
         downloadPokemons();
       
-    },[pokedex_url]);
+    },[pokemonListState.pokedex_url]);
 
  
     return (
@@ -55,13 +59,17 @@ function PokemonList() {
 
             <div className="w-[80%] p-5 flex justify-center flex-wrap">
 
-                { (isLoading) ? 'loading......' : pokemonList.map((p) => <Pokemon name={p.name} image={p.image} id={p.id} />) }
+                { ( pokemonListState.isLoading ) ? 'loading......' : pokemonListState.pokemonList.map((p) => <Pokemon name={p.name} image={p.image} id={p.id} />) }
 
             </div>
 
             <div className="flex justify-between gap-4">
-                <button disabled={ prevurl == null } onClick={()=> setpokedex_url(prevurl)} className="w-32 mb-5  md:w-52 text-white p-2 bg-green-600 rounded-2xl font-bold font-mono " > ⏮️ Previous</button>
-                <button disabled={ nexturl == null} onClick={()=> setpokedex_url(nexturl)} className="w-32 mb-5  md:w-52 text-white p-2 bg-green-600 rounded-2xl font-bold font-mono " >Next ⏭️ </button>
+                <button disabled={ pokemonListState.prevurl == null } onClick={()=> {
+                    const urlToSet = pokemonListState.prevurl;
+                    setpokemonListState({...pokemonListState,pokedex_url: urlToSet})}} className="w-32 mb-5  md:w-52 text-white p-2 bg-green-600 rounded-2xl font-bold font-mono " > ⏮️ Previous</button>
+                <button disabled={ pokemonListState.nexturl == null} onClick={()=> {
+                    const urlToSet = pokemonListState.nexturl;
+                    setpokemonListState({...pokemonListState,pokedex_url: urlToSet})}} className="w-32 mb-5  md:w-52 text-white p-2 bg-green-600 rounded-2xl font-bold font-mono " >Next ⏭️ </button>
             </div>
         </div>
     )
